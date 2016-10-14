@@ -5,9 +5,16 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+/**
+ * Класс подключается к базе данных.
+ */
 public class HibernateSessionFactory {
     private static SessionFactory sessionFactory = buildSessionFactory();
 
+    /**
+     * Создаем сессию
+     * @return
+     */
     protected static SessionFactory buildSessionFactory() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -25,6 +32,10 @@ public class HibernateSessionFactory {
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }
+
+    /**
+     * Закрываем сессию
+     */
     public static void shutdown(){
         getSessionFactory().close();
     }
