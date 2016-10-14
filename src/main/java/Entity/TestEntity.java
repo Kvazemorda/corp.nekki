@@ -12,6 +12,7 @@ public class TestEntity {
     private String fileName;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public long getId() {
         return id;
