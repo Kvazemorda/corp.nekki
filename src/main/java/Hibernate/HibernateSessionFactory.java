@@ -34,7 +34,7 @@ public class HibernateSessionFactory {
     }
 
     /**
-     * Закрываем сессию
+     * Close session
      */
     public static void shutdown(){
         getSessionFactory().close();

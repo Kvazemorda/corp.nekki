@@ -62,4 +62,12 @@ public class TestEntity {
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "TestEntity{" +
+                "content='" + content + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }

@@ -14,7 +14,7 @@ public class FilesXML {
     public FilesXML(String path) {
         this.path = path;
         File catalogFiles = new File(path);
-        //проверяю что директория существует и она является директорией
+        //directory is directory or it exists?
         if(catalogFiles.exists() || catalogFiles.isDirectory()){
             files = catalogFiles.listFiles();
             if(files == null){
@@ -28,22 +28,24 @@ public class FilesXML {
     /**
      * Check all files in directory and send to parser
      */
-    public void getFilesToDirectory(){
+    public final void getFilesToDirectory(){
         //Create 10 thread Pool
         ExecutorService service = Executors.newFixedThreadPool(10);
-        for(File file: files){
-            // file is file and is XML fle
-            if(file.isFile() && isXMLFile(file)){
-                continue;
+
+        for(final File file: files){
+
+            // file is file and is XML file
+            if(file.isFile() && isXMLFile(file)) {
+                service.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Parser parser = new Parser();
+                        parser.startParsXML(file);
+                    }
+                });
             }
-            service.execute(new Runnable() {
-                @Override
-                public void run() {
-                    Parser parser = new Parser();
-                    parser.startParsXML(file);
-                }
-            });
         }
+
         service.shutdown();
     }
 
@@ -54,8 +56,6 @@ public class FilesXML {
      */
     private boolean isXMLFile(File file){
         // If has dit, name not start from dot and file extention has XML
-        // Проверяю есть ли точка в имени фала, если точка не первый символ и расширение файла XML то это
-        //XML файл.
         if(file.getName().lastIndexOf(".") != -1 && file.getName().lastIndexOf(".") != 0 &&
                 file.getName().substring(file.getName().indexOf(".") + 1).equals("xml")){
             return true;
