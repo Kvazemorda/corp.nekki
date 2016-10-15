@@ -1,4 +1,4 @@
-package Parser;
+package Service;
 
 import Entity.TestEntity;
 
@@ -10,11 +10,20 @@ import java.io.FileNotFoundException;
 
 public class Parser {
     int limitContext = 1024;
+    FileInputStream fis;
 
-    public Parser(String fileName) throws FileNotFoundException {
+    public Parser() {
+    }
+
+    public void startParsXML(String fileName){
         TestEntity testEntity = new TestEntity();
         try {
-            XMLStreamReader xmlr = XMLInputFactory.newInstance().createXMLStreamReader(fileName, new FileInputStream(fileName));
+            XMLStreamReader xmlr = null;
+            try {
+                xmlr = XMLInputFactory.newInstance().createXMLStreamReader(fileName, new FileInputStream(fileName));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             while (xmlr.hasNext()){
                 if(xmlr.getLocalName().equals("content")){
                     if(xmlr.getTextLength() <= limitContext){
@@ -27,8 +36,5 @@ public class Parser {
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }

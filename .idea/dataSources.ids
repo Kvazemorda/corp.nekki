@@ -1573,10 +1573,10 @@
       <column name="definition" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
     </table>
     <table name="test" schema="public" catalog="test" type="TABLE">
-      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="content" sqlType="bpchar" precision="1024" scale="0" nullable="false" jdbcType="1"/>
       <column name="dateCreated" sqlType="date" precision="13" scale="0" nullable="false" jdbcType="91"/>
       <column name="fileName" sqlType="bpchar" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndGVzdF9pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
       <primary-key name="test_pkey" columns="id"/>
     </table>
     <procedure name="RI_FKey_cascade_del" schema="pg_catalog" catalog="test" type="2" remarks="cmVmZXJlbnRpYWwgaW50ZWdyaXR5IE9OIERFTEVURSBDQVNDQURF">
