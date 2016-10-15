@@ -6,13 +6,13 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 /**
- * Класс подключается к базе данных.
+ * Class create connect to DB
  */
 public class HibernateSessionFactory {
     private static SessionFactory sessionFactory = buildSessionFactory();
 
     /**
-     * Создаем сессию
+     * Create session
      * @return
      */
     protected static SessionFactory buildSessionFactory() {

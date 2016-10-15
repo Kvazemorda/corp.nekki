@@ -9,7 +9,6 @@ public class TestEntity {
     private long id;
     private String content;
     private Date dateCreated;
-    private String fileName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,16 +41,6 @@ public class TestEntity {
         this.dateCreated = dateCreated;
     }
 
-    @Basic
-    @Column(name = "fileName", nullable = false, insertable = true, updatable = true, length = 1)
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,7 +51,6 @@ public class TestEntity {
         if (id != that.id) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (dateCreated != null ? !dateCreated.equals(that.dateCreated) : that.dateCreated != null) return false;
-        if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
 
         return true;
     }
@@ -72,7 +60,6 @@ public class TestEntity {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
-        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         return result;
     }
 }

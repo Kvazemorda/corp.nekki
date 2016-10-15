@@ -4,13 +4,12 @@ import Entity.TestEntity;
 import Launch.Launch;
 
 /**
- * Клас служит для сохранения, удаления, получения данных БД
+ * Class saved, delete and get entity from DB
  */
 public class TestEntityDAO {
 
     /**
-     * Класс получает собранные данные из xml файла и сохраняет их в БД
-     * @param testEntity
+     * @param testEntity save in DB
      */
     public void saveTestEntity(TestEntity testEntity){
         Launch.session.beginTransaction();
