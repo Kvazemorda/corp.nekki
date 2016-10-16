@@ -45,6 +45,8 @@ public class Parser {
                     }
                 }
             }
+            File fileRead = new File(ReaderProperties.dirReadFiles + file.getName());
+            file.renameTo(fileRead);
             System.out.println(testEntity);
             //save testEntity in DB
             TestEntityDAO testEntityDAO = new TestEntityDAO();

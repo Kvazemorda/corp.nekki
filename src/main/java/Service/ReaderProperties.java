@@ -1,5 +1,6 @@
 package Service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,18 @@ public class ReaderProperties {
             dirUnReadFiles = properties.getProperty("dirUnReadFiles");
             dirReadFiles = properties.getProperty("dirReadFiles");
             dirWrongFiles = properties.getProperty("dirWrongFiles");
+
+            File readFiles = new File(dirReadFiles);
+            //readFiles is directory or it exists?
+            if(!readFiles.exists() || !readFiles.isDirectory()) {
+                System.out.println("Error");
+            }
+            File wrongFiles = new File(dirReadFiles);
+            //readFiles is directory or it exists?
+            if(!wrongFiles.exists() || !wrongFiles.isDirectory()) {
+                System.out.println("Error");
+            }
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
