@@ -17,15 +17,12 @@ public class FilesXML {
     public FilesXML(String path) {
         this.path = path;
         File catalogFiles = new File(path);
-        //directory is directory or it exists?
-        if(catalogFiles.exists() || catalogFiles.isDirectory()){
             files = catalogFiles.listFiles();
             if(files.length == 0){
-                logger.info("В директории нет файлов для чтения");
+                logger.info("Directory does not has files for read");
             }else {
                 getFilesToDirectory();
             }
-        }
     }
 
     /**
@@ -41,14 +38,14 @@ public class FilesXML {
                 service.execute(new Runnable() {
                     @Override
                     public void run() {
-                        Parser parser = new Parser();
-                        parser.startParsXML(file);
+                        Parser parser = new Parser(file);
+                        parser.startParsXML();
                     }
                 });
             }else{
                 File fileWrong = new File(ReaderProperties.dirWrongFiles + file.getName());
                 file.renameTo(fileWrong);
-                logger.info("В папке для чтения нет XML файлов");
+                logger.info("In directory does not have XML files for reader");
             }
         }
         service.shutdown();

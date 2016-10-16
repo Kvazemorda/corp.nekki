@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Class for read config.property and check on correct attribute
+ */
 public class ReaderProperties {
     public static String dirUnReadFiles, dirReadFiles, dirWrongFiles;
     public static int monitorPeriod;
     private boolean dirUnReadFilesIsUnexpected, dirReadFilesIsUnexpected, dirWrongReadFilesIsUnexpected;
     private static Logger logger = Logger.getLogger(ReaderProperties.class);
-
 
     public ReaderProperties() {
         InputStream inputStream;
@@ -27,7 +29,7 @@ public class ReaderProperties {
             dirReadFiles = properties.getProperty("dirReadFiles");
             dirWrongFiles = properties.getProperty("dirWrongFiles");
             String monitorPeriodStr = properties.getProperty("monitorPeriod");
-            monitorPeriod = Integer.valueOf(monitorPeriodStr);
+            monitorPeriod = Integer.valueOf(monitorPeriodStr) * 1000 * 60;
 
 
             File unReadFiles = new File(dirUnReadFiles);
@@ -62,7 +64,16 @@ public class ReaderProperties {
             logger.error("Monitor period must be number");
             System.out.println("Monitor period must be number");
         }
+    }
+    public boolean isDirUnReadFilesIsUnexpected() {
+        return dirUnReadFilesIsUnexpected;
+    }
 
+    public boolean isDirReadFilesIsUnexpected() {
+        return dirReadFilesIsUnexpected;
+    }
 
+    public boolean isDirWrongReadFilesIsUnexpected() {
+        return dirWrongReadFilesIsUnexpected;
     }
 }
