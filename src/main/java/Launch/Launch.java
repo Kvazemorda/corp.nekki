@@ -1,7 +1,9 @@
 package Launch;
 
+import Hibernate.HibernateSessionFactory;
 import Service.FilesXML;
 import Service.ReaderProperties;
+import org.hibernate.Session;
 
 public class Launch {
 
@@ -12,8 +14,8 @@ public class Launch {
         while (true){
             if(!readerProperties.isDirReadFilesIsUnexpected() && !readerProperties.isDirUnReadFilesIsUnexpected()
                     && !readerProperties.isDirWrongReadFilesIsUnexpected()){
+                Session session = HibernateSessionFactory.getSessionFactory().openSession();
                 FilesXML filesXML = new FilesXML(ReaderProperties.dirUnReadFiles);
-                System.out.println("sleep on minutes");
                 try {
                     Thread.sleep(ReaderProperties.monitorPeriod);
                 } catch (InterruptedException e) {
