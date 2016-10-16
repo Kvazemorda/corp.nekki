@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<Entry>
-    <!--Строка длиной до 1024 символов-->
-    <content>Содержимое записи 4</content>
-    <!--дата создания-->
-    <creationDate>2015-10-04 00:00:00</creationDate>
-</Entry>
