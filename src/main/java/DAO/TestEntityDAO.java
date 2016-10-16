@@ -1,19 +1,27 @@
 package DAO;
 
 import Entity.TestEntity;
-import Launch.Launch;
+import Hibernate.HibernateSessionFactory;
+import org.hibernate.Session;
 
 /**
  * Class saved, delete and get entity from DB
  */
 public class TestEntityDAO {
+    private Session session;
+
+    public TestEntityDAO() {
+        session = HibernateSessionFactory.getSessionFactory().openSession();
+    }
 
     /**
      * @param testEntity save in DB
      */
     public void saveTestEntity(TestEntity testEntity){
-        Launch.session.beginTransaction();
-        Launch.session.save(testEntity);
-        Launch.session.getTransaction().commit();
+        session.beginTransaction();
+        session.save(testEntity);
+        session.getTransaction().commit();
+        session.close();
+
     }
 }

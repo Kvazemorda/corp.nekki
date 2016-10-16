@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="PostgreSQL - test@localhost" uuid="f3770b94-0387-4d5e-b8e5-e1ecb955e84e">
-      <secret-storage>master_key</secret-storage>
+    <data-source name="PostgreSQL - nekki@localhost" uuid="135921a0-d665-4358-b909-ace1c98c84d3">
+      <secret-storage>memory</secret-storage>
       <user-name>postgres</user-name>
-      <schema-pattern>test.pg_catalog test.public</schema-pattern>
-      <default-schemas>test.pg_catalog test.public</default-schemas>
+      <schema-pattern>nekki.pg_catalog nekki.public</schema-pattern>
+      <default-schemas>nekki.pg_catalog nekki.public</default-schemas>
     </data-source>
   </component>
 </project>

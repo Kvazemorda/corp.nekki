@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "test", schema = "public", catalog = "test")
+@Table(name = "test", schema = "public", catalog = "nekki")
 public class TestEntity {
     private long id;
     private String content;
@@ -31,7 +31,7 @@ public class TestEntity {
         this.content = content;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateCreated", nullable = false, insertable = true, updatable = true)
     public Date getDateCreated() {
         return dateCreated;

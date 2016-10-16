@@ -1,5 +1,7 @@
 package Service;
 
+import Hibernate.HibernateSessionFactory;
+
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,6 +49,21 @@ public class FilesXML {
         }
 
         service.shutdown();
+
+        while (true){
+            if(!service.isShutdown()){
+                HibernateSessionFactory.shutdown();
+            }else{
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+
     }
 
     /**

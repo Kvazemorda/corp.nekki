@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1557537059">
-    <data-source source="LOCAL" name="PostgreSQL - test@localhost" uuid="f3770b94-0387-4d5e-b8e5-e1ecb955e84e">
+  <component name="DataSourceManagerImpl" format="xml" hash="1345933100">
+    <data-source source="LOCAL" name="PostgreSQL - nekki@localhost" uuid="135921a0-d665-4358-b909-ace1c98c84d3">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/test</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/nekki</jdbc-url>
       <libraries />
     </data-source>
   </component>

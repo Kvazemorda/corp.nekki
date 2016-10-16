@@ -1,5 +1,6 @@
 package Service;
 
+import DAO.TestEntityDAO;
 import Entity.TestEntity;
 
 import javax.xml.stream.XMLInputFactory;
@@ -46,8 +47,8 @@ public class Parser {
             }
             System.out.println(testEntity);
             //save testEntity in DB
-         /*   TestEntityDAO testEntityDAO = new TestEntityDAO();
-            testEntityDAO.saveTestEntity(testEntity);*/
+            TestEntityDAO testEntityDAO = new TestEntityDAO();
+            testEntityDAO.saveTestEntity(testEntity);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
