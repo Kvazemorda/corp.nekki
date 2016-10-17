@@ -17,7 +17,7 @@ public class Launch {
                 Session session = HibernateSessionFactory.getSessionFactory().openSession();
                 FilesXML filesXML = new FilesXML(ReaderProperties.dirUnReadFiles);
                 try {
-                    Thread.sleep(ReaderProperties.monitorPeriod);
+                    Thread.sleep((long) ReaderProperties.monitorPeriod);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

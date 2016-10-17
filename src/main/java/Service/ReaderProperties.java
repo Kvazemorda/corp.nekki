@@ -56,12 +56,11 @@ public class ReaderProperties {
 
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (NumberFormatException e){
-            e.printStackTrace();
-            logger.error("Monitor period must be number");
+            logger.error("Monitor period must be number " + e);
             System.out.println("Monitor period must be number");
         }
     }

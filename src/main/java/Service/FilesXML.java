@@ -29,8 +29,8 @@ public class FilesXML {
      * Check all files in directory and send to parser
      */
     public final void getFilesToDirectory(){
-        //Create 10 thread Pool
-        ExecutorService service = Executors.newFixedThreadPool(10);
+        //Create 4 thread Pool
+        ExecutorService service = Executors.newFixedThreadPool(16);
 
         for(final File file: files){
             // file is file and is XML file

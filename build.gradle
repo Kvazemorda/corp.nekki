@@ -1,14 +1,20 @@
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'idea'
 
-sourceCompatibility = 1.5
+defaultTasks 'clean', 'build'
+
+sourceCompatibility = 1.7
 version = '1.0'
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 jar {
+    from {
+        (configurations.runtime).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
     manifest {
         attributes(
                 'Main-Class': 'Launch.Launch'
@@ -17,6 +23,7 @@ jar {
 }
 
 dependencies {
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // https://mvnrepository.com/artifact/postgresql/postgresql

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 /**
  * Class make parses XML file and send to save it DB
@@ -24,6 +25,7 @@ public class Parser {
     private File file;
     private FileInputStream fis = null;
     private TestEntity testEntity;
+    private XMLStreamReader xmlr = null;
 
     public Parser(File file) {
         this.file = file;
@@ -35,46 +37,79 @@ public class Parser {
      * if file wrong file it moves to directory with wrong files     */
     public void startParsXML(){
         testEntity = new TestEntity();
-        XMLStreamReader xmlr = null;
         try {
             fis = new FileInputStream(file);
             xmlr = XMLInputFactory.newInstance().createXMLStreamReader(fis);
-                //start read xml file
+            boolean entryStart = false;
+            boolean entryEnd = false;
+            Date dateCreation = null;
+            String textContent = null;
+            String textDateCreation = null;
+            //start read xml file
                 while (xmlr.hasNext()) {
                     xmlr.next();
-                    //if file has start element and tag equals - content then read next row
-                    if (xmlr.isStartElement() && xmlr.getLocalName().toLowerCase().equals("content")) {
+                    //Tag enrty start
+                    if (xmlr.isStartElement() && xmlr.getLocalName().toLowerCase().equals("entry")) {
                         xmlr.next();
-                        //save text from tag "content" if text more then 0 or less then 1024
-                        if (xmlr.hasText() && xmlr.getText().trim().length() > 0 && xmlr.getTextLength() <= limitContext) {
-                            testEntity.setContent(xmlr.getText());
+                        entryStart = true;
+                    }
+
+                    if(textContent == null){
+                        textContent = getTextFromTag("content");
+                    }
+                    if(textDateCreation == null){
+                        textDateCreation = getTextFromTag("creationdate");
+                    }
+                    if (textDateCreation != null){
+                        dateCreation = changeTextToDate(textDateCreation);
+                    }
+                    if (xmlr.isEndElement() && xmlr.getLocalName().toLowerCase().equals("entry")){
+                        entryEnd = true;
+                    }
+                    if (entryStart && entryEnd && textContent != null && textContent.length() <= limitContext && dateCreation != null){
+                            testEntity.setContent(textContent);
+                            testEntity.setDateCreated(dateCreation);
                         } else {
-                            logger.error(file.getName() + " tag content - count simbols less then 0 or more then 1024 ");
-                            //move wrong file to directory with other wrong files
-                        }
-                        //read next row if tag name equals "creationDate"
-                    } else if (xmlr.isStartElement() && xmlr.getLocalName().equals("creationDate")) {
-                        xmlr.next();
-                        // save date if format is true
-                        if (xmlr.hasText() && xmlr.getText().trim().length() > 0) {
-                            testEntity.setDateCreated(changeTextToDate(xmlr.getText()));
+                            logger.error(file.getName() + " XML is not correct format");
                         }
                     }
-                }
         } catch (XMLStreamException e) {
             logger.error(file.getName() + " " + e);
         } catch (FileNotFoundException e) {
             logger.error(file.getName() + " " + e);
-        } catch (IOException e) {
+        } catch (NoSuchElementException e){
             logger.error(file.getName() + " " + e);
         }
+
         saveInfoToDB();
+    }
+
+    /**
+     * Method return text from tag
+     * @param tag
+     * @return
+     */
+    private String getTextFromTag(String tag) throws XMLStreamException, NoSuchElementException {
+        String textFromTag = null;
+            //read next row if equals tag
+            if (xmlr.isStartElement() && xmlr.getLocalName().toLowerCase().equals(tag)){
+                xmlr.next();
+                //save text to temporary variable from tag "content" if text more then 0 or less then 1024
+                if (xmlr.hasText() && xmlr.getText().trim().length() > 0 && xmlr.getTextLength() <= limitContext) {
+                    String textTemp = xmlr.getText();
+                    xmlr.next();
+                    //save text to textEntity if tag has end
+                    if (xmlr.isEndElement() && xmlr.getLocalName().toLowerCase().equals(tag)) {
+                        textFromTag = textTemp;
+                    }
+                }
+            }
+        return textFromTag;
     }
 
     /**
      * save testEntity in DB if field Content and dateCreated not null
      */
-
     private void saveInfoToDB(){
         try {
             fis.close();
