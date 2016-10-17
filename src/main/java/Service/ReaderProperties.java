@@ -46,7 +46,7 @@ public class ReaderProperties {
                 logger.error("Not correct directory path in config.property for was read files");
                 System.out.println("Not correct directory path in config.property for was read files");
             }
-            File wrongFiles = new File(dirReadFiles);
+            File wrongFiles = new File(dirWrongFiles);
             //wrongFiles is directory or it exists?
             if(!wrongFiles.exists() || !wrongFiles.isDirectory()) {
                 dirWrongReadFilesIsUnexpected = true;
