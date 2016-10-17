@@ -22,6 +22,8 @@ public class Parser {
     private int limitContext = 1024;
     private Logger logger = Logger.getLogger(Parser.class);
     private File file;
+    private FileInputStream fis = null;
+    private TestEntity testEntity;
 
     public Parser(File file) {
         this.file = file;
@@ -32,14 +34,11 @@ public class Parser {
      * if all correct he save it data base and move file to another directory.
      * if file wrong file it moves to directory with wrong files     */
     public void startParsXML(){
-        TestEntity testEntity = new TestEntity();
+        testEntity = new TestEntity();
         XMLStreamReader xmlr = null;
-        FileInputStream fis = null;
-
         try {
             fis = new FileInputStream(file);
             xmlr = XMLInputFactory.newInstance().createXMLStreamReader(fis);
-            fis.close();
                 //start read xml file
                 while (xmlr.hasNext()) {
                     xmlr.next();
@@ -61,20 +60,25 @@ public class Parser {
                             testEntity.setDateCreated(changeTextToDate(xmlr.getText()));
                         }
                     }
-
                 }
         } catch (XMLStreamException e) {
             logger.error(file.getName() + " " + e);
-
         } catch (FileNotFoundException e) {
             logger.error(file.getName() + " " + e);
         } catch (IOException e) {
             logger.error(file.getName() + " " + e);
         }
+        saveInfoToDB();
+    }
 
-        //save testEntity in DB if field Content and dateCreated not null
+    /**
+     * save testEntity in DB if field Content and dateCreated not null
+     */
+
+    private void saveInfoToDB(){
         try {
-            if (testEntity.getContent() != null && !testEntity.getDateCreated().equals(null)) {
+            fis.close();
+            if (testEntity.getContent() != null && testEntity.getDateCreated() != null) {
                 TestEntityDAO testEntityDAO = new TestEntityDAO();
                 testEntityDAO.saveTestEntity(testEntity);
                 // move to directory was read
@@ -84,9 +88,9 @@ public class Parser {
                 logger.warn(file.getName() + " was moved to wrong directory");
             }
         }catch (NullPointerException e){
-            logger.warn(file.getName() + " was moved to wrong directory " + e);
-            moveFile(ReaderProperties.dirWrongFiles, file.getName());
-            System.out.println(file.getName() + " was moved");
+            logger.error(file.getName() + " " + e);
+        } catch (IOException e) {
+            logger.error(file.getName() + " " + e);
         }
     }
 

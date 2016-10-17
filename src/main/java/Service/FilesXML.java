@@ -38,7 +38,6 @@ public class FilesXML {
                 service.execute(new Runnable() {
                     @Override
                     public void run() {
-
                         Parser parser = new Parser(file);
                         parser.startParsXML();
                     }
