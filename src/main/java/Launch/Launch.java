@@ -13,7 +13,7 @@ public class Launch {
         // Launch if config.property is correct
         while (true){
             if(!readerProperties.isDirReadFilesIsUnexpected() && !readerProperties.isDirUnReadFilesIsUnexpected()
-                    && !readerProperties.isDirWrongReadFilesIsUnexpected()){
+                    && !readerProperties.isDirWrongReadFilesIsUnexpected() && !readerProperties.isDirEquals()){
                 Session session = HibernateSessionFactory.getSessionFactory().openSession();
                 FilesXML filesXML = new FilesXML(ReaderProperties.dirUnReadFiles);
                 try {
@@ -22,7 +22,6 @@ public class Launch {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 }

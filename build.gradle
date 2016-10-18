@@ -2,9 +2,10 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'distribution'
 
+
 defaultTasks 'clean', 'build'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 version = '1.0'
 
 task createDocs {
@@ -15,8 +16,14 @@ task createDocs {
         new File(docs, "readme.txt").write("Read me!")
     }
 }
+sourceSets.main.resources { srcDirs = ["/"]}
+
 distributions {
     main {
+        baseName = 'corp.nekki'
+        contents{
+                from{"$buildDir/libs"}
+        }
         contents {
             from(createDocs) {
                 into "docs"
@@ -30,16 +37,24 @@ repositories {
     mavenCentral()
 }
 jar {
+    manifest {
+        attributes('Main-Class': 'Launch.Launch')
+
+    }
     from {
         (configurations.runtime).collect {
             it.isDirectory() ? it : zipTree(it)
         }
     }
-    manifest {
-        attributes(
-                'Main-Class': 'Launch.Launch'
-        )
-    }
+}
+
+task copyTask(type: Copy) {
+    into "$libsDir/"
+    from "src/main/resources"
+}
+
+build.doLast {
+    tasks.copyTask.execute()
 }
 
 dependencies {

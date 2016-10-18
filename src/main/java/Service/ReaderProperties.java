@@ -14,7 +14,8 @@ import java.util.Properties;
 public class ReaderProperties {
     public static String dirUnReadFiles, dirReadFiles, dirWrongFiles;
     public static int monitorPeriod;
-    private boolean dirUnReadFilesIsUnexpected, dirReadFilesIsUnexpected, dirWrongReadFilesIsUnexpected;
+    private boolean dirUnReadFilesIsUnexpected, dirReadFilesIsUnexpected, dirWrongReadFilesIsUnexpected,
+            dirEquals;
     private static Logger logger = Logger.getLogger(ReaderProperties.class);
 
     public ReaderProperties() {
@@ -36,22 +37,33 @@ public class ReaderProperties {
             //unReadFiles is directory or it exists?
             if(!unReadFiles.exists() || !unReadFiles.isDirectory()) {
                 dirUnReadFilesIsUnexpected = true;
-                logger.error("Not correct directory path in config.property for new files for reader");
-                System.out.println("Not correct directory path in config.property for new files for reader");
+                logger.error("Not correct directory path in config.property for new files for reader "
+                        + dirUnReadFiles);
+                System.out.println("Not correct directory path in config.property for new files for reader "
+                        + dirUnReadFiles);
             }
             File readFiles = new File(dirReadFiles);
             //readFiles is directory or it exists?
             if(!readFiles.exists() || !readFiles.isDirectory()) {
-                dirUnReadFilesIsUnexpected = true;
-                logger.error("Not correct directory path in config.property for was read files");
-                System.out.println("Not correct directory path in config.property for was read files");
+                dirReadFilesIsUnexpected = true;
+                logger.error("Not correct directory path in config.property for was read files " + dirReadFiles);
+                System.out.println("Not correct directory path in config.property for was read files" + dirReadFiles);
             }
             File wrongFiles = new File(dirWrongFiles);
             //wrongFiles is directory or it exists?
             if(!wrongFiles.exists() || !wrongFiles.isDirectory()) {
                 dirWrongReadFilesIsUnexpected = true;
-                logger.error("Not correct directory path in config.property for wrong files");
-                System.out.println("Not correct directory path in config.property for wrong files");
+                logger.error("Not correct directory path in config.property for wrong files" + dirWrongFiles);
+                System.out.println("Not correct directory path in config.property for wrong files" + dirWrongFiles );
+            }
+            if(dirReadFiles.equals(dirUnReadFiles)){
+                dirEquals = true;
+            }
+            if(dirReadFiles.equals(dirWrongFiles)){
+                dirEquals = true;
+            }
+            if(dirWrongFiles.equals(dirUnReadFiles)){
+                dirEquals = true;
             }
 
 
@@ -74,5 +86,9 @@ public class ReaderProperties {
 
     public boolean isDirWrongReadFilesIsUnexpected() {
         return dirWrongReadFilesIsUnexpected;
+    }
+
+    public boolean isDirEquals() {
+        return dirEquals;
     }
 }
