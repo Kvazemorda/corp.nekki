@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'distribution'
 
 
@@ -9,14 +8,16 @@ sourceCompatibility = 1.8
 version = '1.0'
 
 task createDocs {
-    def docs = file("$buildDir/docs")
+    def docs = file("$buildDir/ReadMe")
     outputs.dir docs
     doLast {
         docs.mkdirs()
-        new File(docs, "readme.txt").write("Read me!")
+        new File(docs, "readme.txt").write(" В файле config.properties укажите папку для чтения, сохранения распарсеных \n" +
+                "и сохранения ошибочных файлов, также укажите период проверки новых файлов в минутах \n" +
+                "в фале hibernate.cfg.xml укажите URL, порт, имя базы данныхю, имя пользователя и пароль \n" +
+                "в файлу log4j.properties при необходимости измените место хранения log файла")
     }
 }
-sourceSets.main.resources { srcDirs = ["/"]}
 
 distributions {
     main {
@@ -26,35 +27,28 @@ distributions {
         }
         contents {
             from(createDocs) {
-                into "docs"
+                into "ReadMe"
             }
         }
     }
 }
 
-
 repositories {
     mavenCentral()
 }
 jar {
-    manifest {
-        attributes('Main-Class': 'Launch.Launch')
-
-    }
     from {
         (configurations.runtime).collect {
             it.isDirectory() ? it : zipTree(it)
         }
     }
-}
+    manifest {
+        attributes('Main-Class': 'Launch.Launch')
 
-task copyTask(type: Copy) {
-    into "$libsDir/"
-    from "src/main/resources"
-}
-
-build.doLast {
-    tasks.copyTask.execute()
+    }
+    into('lib') {
+        from configurations.compile
+    }
 }
 
 dependencies {

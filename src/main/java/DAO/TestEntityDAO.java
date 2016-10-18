@@ -22,6 +22,5 @@ public class TestEntityDAO {
         session.save(testEntity);
         session.getTransaction().commit();
         session.close();
-
     }
 }

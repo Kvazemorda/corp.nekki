@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="PostgreSQL - nekki@localhost" uuid="135921a0-d665-4358-b909-ace1c98c84d3">
+    <data-source name="PostgreSQL - postgres@localhost" uuid="135921a0-d665-4358-b909-ace1c98c84d3">
       <secret-storage>memory</secret-storage>
       <user-name>postgres</user-name>
       <schema-pattern>nekki.pg_catalog nekki.public</schema-pattern>
