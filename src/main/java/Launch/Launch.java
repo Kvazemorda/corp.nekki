@@ -1,6 +1,5 @@
 package Launch;
 
-import Hibernate.CheckTable;
 import Hibernate.HibernateSessionFactory;
 import Service.FilesXML;
 import Service.ReaderProperties;
@@ -9,11 +8,9 @@ import org.hibernate.Session;
 public class Launch {
 
     public static void main(String[] args) {
-
         ReaderProperties readerProperties = new ReaderProperties();
         // Launch if config.property is correct
         while (true){
-            CheckTable checkTable = new CheckTable();
             if(!readerProperties.isDirReadFilesIsUnexpected() && !readerProperties.isDirUnReadFilesIsUnexpected()
                     && !readerProperties.isDirWrongReadFilesIsUnexpected() && !readerProperties.isDirEquals()){
                 Session session = HibernateSessionFactory.getSessionFactory().openSession();

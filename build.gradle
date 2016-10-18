@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'distribution'
 
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'build', 'distZip'
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -15,7 +15,15 @@ task createDocs {
         new File(docs, "readme.txt").write(" В файле config.properties укажите папку для чтения, сохранения распарсеных \n" +
                 "и сохранения ошибочных файлов, также укажите период проверки новых файлов в минутах \n" +
                 "в фале hibernate.cfg.xml укажите URL, порт, имя базы данныхю, имя пользователя и пароль \n" +
-                "в файлу log4j.properties при необходимости измените место хранения log файла")
+                "в файлу log4j.properties при необходимости измените место хранения log файла \n " +
+                "При желании в базу данных можно добавить таблицу запросом \n )" +
+                "CREATE TABLE test\n" +
+                "(\n" +
+                "  content CHAR(1024) NOT NULL,\n" +
+                "  datecreated TIMESTAMP NOT NULL,\n" +
+                "  id SERIAL PRIMARY KEY NOT NULL\n" +
+                "); \n " +
+                "Если нет желания, можно и не добавлять.")
     }
 }
 
@@ -45,9 +53,6 @@ jar {
     manifest {
         attributes('Main-Class': 'Launch.Launch')
 
-    }
-    into('lib') {
-        from configurations.compile
     }
 }
 
